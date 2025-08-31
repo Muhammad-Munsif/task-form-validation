@@ -1,40 +1,41 @@
-document.addEventListener('DOMContentLoaded', function() {
-  const form = document.getElementById('signupForm');
-  const nameInput = document.getElementById('name');
-  const emailInput = document.getElementById('email');
-  const passwordInput = document.getElementById('password');
-  const togglePassword = document.getElementById('togglePassword');
-  const passwordStrength = document.querySelector('#passwordStrength div');
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("signupForm");
+  const nameInput = document.getElementById("name");
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+  const togglePassword = document.getElementById("togglePassword");
+  const passwordStrength = document.querySelector("#passwordStrength div");
 
   // Error elements
-  const nameError = document.getElementById('nameError');
-  const emailError = document.getElementById('emailError');
-  const passwordError = document.getElementById('passwordError');
-  const passwordTips = document.getElementById('passwordTips');
+  const nameError = document.getElementById("nameError");
+  const emailError = document.getElementById("emailError");
+  const passwordError = document.getElementById("passwordError");
+  const passwordTips = document.getElementById("passwordTips");
 
   // Toggle password visibility
-  togglePassword.addEventListener('click', function() {
-    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-    passwordInput.setAttribute('type', type);
-    this.querySelector('i').classList.toggle('fa-eye');
-    this.querySelector('i').classList.toggle('fa-eye-slash');
+  togglePassword.addEventListener("click", function () {
+    const type =
+      passwordInput.getAttribute("type") === "password" ? "text" : "password";
+    passwordInput.setAttribute("type", type);
+    this.querySelector("i").classList.toggle("fa-eye");
+    this.querySelector("i").classList.toggle("fa-eye-slash");
   });
 
   // Real-time validation
-  nameInput.addEventListener('input', validateName);
-  emailInput.addEventListener('input', validateEmail);
-  passwordInput.addEventListener('input', validatePassword);
+  nameInput.addEventListener("input", validateName);
+  emailInput.addEventListener("input", validateEmail);
+  passwordInput.addEventListener("input", validatePassword);
 
   // Form submission
-  form.addEventListener('submit', function(e) {
+  form.addEventListener("submit", function (e) {
     e.preventDefault();
-    
+
     const isNameValid = validateName();
     const isEmailValid = validateEmail();
     const isPasswordValid = validatePassword();
-    
+
     if (isNameValid && isEmailValid && isPasswordValid) {
-      alert('Form submitted successfully!');
+      alert("Form submitted successfully!");
       form.reset();
       resetValidation();
     }
@@ -43,8 +44,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // Validation functions
   function validateName() {
     const name = nameInput.value.trim();
-    if (name === '') {
-      showError(nameInput, nameError, 'Please enter your name');
+    if (name === "") {
+      showError(nameInput, nameError, "Please enter your name");
       return false;
     } else {
       showSuccess(nameInput);
@@ -56,12 +57,12 @@ document.addEventListener('DOMContentLoaded', function() {
   function validateEmail() {
     const email = emailInput.value.trim();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
-    if (email === '') {
-      showError(emailInput, emailError, 'Please enter an email');
+
+    if (email === "") {
+      showError(emailInput, emailError, "Please enter an email");
       return false;
     } else if (!emailRegex.test(email)) {
-      showError(emailInput, emailError, 'Please enter a valid email');
+      showError(emailInput, emailError, "Please enter a valid email");
       return false;
     } else {
       showSuccess(emailInput);
@@ -75,28 +76,28 @@ document.addEventListener('DOMContentLoaded', function() {
     const hasMinLength = password.length >= 8;
     const hasNumber = /\d/.test(password);
     const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-    
+
     // Update password strength meter
     if (password.length > 0) {
-      passwordTips.classList.remove('hidden');
-      
+      passwordTips.classList.remove("hidden");
+
       if (password.length < 4) {
-        passwordStrength.className = 'weak';
+        passwordStrength.className = "weak";
       } else if (password.length < 8 || !hasNumber || !hasSpecialChar) {
-        passwordStrength.className = 'medium';
+        passwordStrength.className = "medium";
       } else {
-        passwordStrength.className = 'strong';
+        passwordStrength.className = "strong";
       }
     } else {
-      passwordTips.classList.add('hidden');
+      passwordTips.classList.add("hidden");
     }
-    
+
     // Validate password
-    if (password === '') {
-      showError(passwordInput, passwordError, 'Please enter a password');
+    if (password === "") {
+      showError(passwordInput, passwordError, "Please enter a password");
       return false;
     } else if (!hasMinLength) {
-      showError(passwordInput, passwordError, 'Password must be 8+ characters');
+      showError(passwordInput, passwordError, "Password must be 8+ characters");
       return false;
     } else {
       showSuccess(passwordInput);
@@ -107,31 +108,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Helper functions
   function showError(input, errorElement, message) {
-    input.classList.add('input-error');
-    input.classList.remove('input-success');
+    input.classList.add("input-error");
+    input.classList.remove("input-success");
     errorElement.textContent = message;
-    errorElement.classList.remove('hidden');
+    errorElement.classList.remove("hidden");
   }
 
   function showSuccess(input) {
-    input.classList.remove('input-error');
-    input.classList.add('input-success');
+    input.classList.remove("input-error");
+    input.classList.add("input-success");
   }
 
   function hideError(errorElement) {
-    errorElement.classList.add('hidden');
+    errorElement.classList.add("hidden");
   }
 
   function resetValidation() {
-    [nameInput, emailInput, passwordInput].forEach(input => {
-      input.classList.remove('input-error', 'input-success');
+    [nameInput, emailInput, passwordInput].forEach((input) => {
+      input.classList.remove("input-error", "input-success");
     });
-    [nameError, emailError, passwordError].forEach(error => {
-      error.classList.add('hidden');
+    [nameError, emailError, passwordError].forEach((error) => {
+      error.classList.add("hidden");
     });
-    passwordStrength.className = '';
-    passwordTips.classList.add('hidden');
-    passwordInput.setAttribute('type', 'password');
-    togglePassword.querySelector('i').className = 'fas fa-eye';
+    passwordStrength.className = "";
+    passwordTips.classList.add("hidden");
+    passwordInput.setAttribute("type", "password");
+    togglePassword.querySelector("i").className = "fas fa-eye";
   }
 });
