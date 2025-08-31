@@ -24,6 +24,7 @@
 }
 
 /* Smooth transitions */
-input, button {
+input,
+button {
   transition: all 0.3s ease;
 }
